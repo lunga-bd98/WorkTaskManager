@@ -17,6 +17,19 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            // User role
+            $table->enum('role', [
+                'admin',
+                'employee'
+            ])->default('employee');
+
+            // Department
+            $table->foreignId('department_id')->nullable()->constrained()->nullOnDelete();
+
+            // Whether employee is a department leader
+            $table->boolean('is_department_leader')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });
